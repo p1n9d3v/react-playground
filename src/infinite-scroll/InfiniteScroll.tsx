@@ -72,12 +72,12 @@ export const InfiniteScroll = () => {
             },
             {
                 root: containerRef.current,
-                rootMargin: '100px', // 타겟 요소가 화면에 나타나기 100px 전에 감지
-                threshold: 0.1,
+                threshold: 0.5,
             },
         );
 
         if (targetRef.current) {
+            console.log(containerRef.current);
             observer.observe(targetRef.current);
         }
 
@@ -94,12 +94,11 @@ export const InfiniteScroll = () => {
                 <Card key={data.id} {...data} />
             ))}
 
+            <div className={styles.target} ref={targetRef}></div>
+
             {isLoading && (
                 <div className={styles.loading}>Loading more items...</div>
             )}
-
-            <div ref={targetRef} style={{ height: '10px' }} />
-
             {!hasMore && (
                 <div className={styles.endMessage}>No more items to load</div>
             )}
