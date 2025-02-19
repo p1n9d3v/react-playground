@@ -43,6 +43,7 @@ export const Pagination = () => {
     );
 
     const handlePageChange = (pageNumber: number) => {
+        if (currentPage === pageNumber) return;
         setCurrentPage(pageNumber);
     };
 
