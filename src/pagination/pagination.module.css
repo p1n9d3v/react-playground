@@ -79,21 +79,3 @@
     color: white;
     border-color: #007bff;
 }
-
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-    .table {
-        font-size: 0.875rem;
-    }
-
-    .table th,
-    .table td {
-        padding: 0.5rem;
-    }
-
-    .navigationButton,
-    .pageButton {
-        padding: 0.375rem 0.75rem;
-        font-size: 0.875rem;
-    }
-}
