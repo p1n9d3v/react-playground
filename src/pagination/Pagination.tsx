@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { customFaker } from '../msw/browser';
 import styles from './pagination.module.css';
 
 interface DataItem {
@@ -12,10 +13,10 @@ const PAGINATION_CONFIG = {
     VISIBLE_PAGES: 5,
 } as const;
 
-const datas: DataItem[] = Array.from({ length: 112 }, (_, i) => ({
+const datas: DataItem[] = Array.from({ length: 110 }, (_, i) => ({
     id: i,
-    name: `Name ${i}`,
-    email: `email${i}@example.com`,
+    name: customFaker.person.fullName(),
+    email: customFaker.internet.email(),
 }));
 
 export const Pagination = () => {
@@ -24,10 +25,10 @@ export const Pagination = () => {
     const totalPages = Math.ceil(
         datas.length / PAGINATION_CONFIG.ITEMS_PER_PAGE,
     );
-    const currentGroup = Math.ceil(
-        currentPage / PAGINATION_CONFIG.VISIBLE_PAGES,
-    );
-    const startPage = (currentGroup - 1) * PAGINATION_CONFIG.VISIBLE_PAGES + 1;
+    const startPage =
+        (Math.ceil(currentPage / PAGINATION_CONFIG.VISIBLE_PAGES) - 1) *
+            PAGINATION_CONFIG.VISIBLE_PAGES +
+        1;
     const endPage = Math.min(
         startPage + PAGINATION_CONFIG.VISIBLE_PAGES - 1,
         totalPages,

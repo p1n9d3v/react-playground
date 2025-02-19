@@ -77,7 +77,6 @@ export const InfiniteScroll = () => {
         );
 
         if (targetRef.current) {
-            console.log(containerRef.current);
             observer.observe(targetRef.current);
         }
 

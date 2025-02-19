@@ -2,7 +2,7 @@ import { setupWorker } from 'msw/browser';
 import { http, HttpResponse } from 'msw';
 import { en, Faker } from '@faker-js/faker';
 
-export const faker = new Faker({
+export const customFaker = new Faker({
     locale: [en],
 });
 
@@ -14,9 +14,9 @@ export type MockCardData = {
 };
 const infiniteScrollMockData = Array.from({ length: 100 }, (_, i) => ({
     id: `id-${i}`,
-    name: faker.person.fullName(),
-    email: faker.internet.email(),
-    imgUrl: faker.image.url(),
+    name: customFaker.person.fullName(),
+    email: customFaker.internet.email(),
+    imgUrl: customFaker.image.url(),
 }));
 
 export const worker = setupWorker(
