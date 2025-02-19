@@ -7,6 +7,9 @@ export const Home = () => {
                 <li>
                     <Link to="/pagination">Pagination</Link>
                 </li>
+                <li>
+                    <Link to="/infinite-scroll">Infinite Scroll</Link>
+                </li>
             </ul>
         </div>
     );
