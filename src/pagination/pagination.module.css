@@ -1,0 +1,99 @@
+.container {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tableContainer {
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+}
+
+.table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.pagination {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.navigationButton {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.navigationButton:hover:not(:disabled) {
+    background-color: #f8f9fa;
+    border-color: #cbd3da;
+}
+
+.navigationButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pageButton {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pageButton:hover:not(.active) {
+    background-color: #f8f9fa;
+    border-color: #cbd3da;
+}
+
+.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.875rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.5rem;
+    }
+
+    .navigationButton,
+    .pageButton {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+    }
+}
