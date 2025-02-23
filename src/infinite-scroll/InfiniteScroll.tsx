@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { MockCardData } from '../msw/browser';
 import styles from './infinite-scroll.module.css';
+import { MockCardData } from '../msw/mock-card';
 
 const Card = (props: MockCardData) => {
     const { id, name, email, imgUrl } = props;
@@ -16,11 +16,23 @@ const Card = (props: MockCardData) => {
     );
 };
 
+const getDataAPI = async (pageNum: number) => {
+    try {
+        const params = {
+            page: pageNum.toString(),
+        };
+        const queryStr = new URLSearchParams(params).toString();
+        const response = await fetch('/api/infinite-scroll?' + queryStr);
+        return await response.json();
+    } catch (error) {
+        return error;
+    }
+};
+
 export const InfiniteScroll = () => {
     const [datas, setDatas] = useState<MockCardData[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const targetRef = useRef<HTMLDivElement>(null);
@@ -29,20 +41,8 @@ export const InfiniteScroll = () => {
         try {
             setIsLoading(true);
 
-            const params = {
-                page: pageNum.toString(),
-            };
-            const queryStr = new URLSearchParams(params).toString();
-            const response = await fetch('/api/infinite-scroll?' + queryStr);
-            const newData = await response.json();
+            const newData = await getDataAPI(pageNum);
 
-            // 새로운 데이터가 없으면 hasMore를 false로 설정
-            if (newData.length === 0) {
-                setHasMore(false);
-                return;
-            }
-
-            // 기존 데이터에 새로운 데이터 추가
             setDatas((prev) => {
                 const mergedData = [...prev, ...newData];
 
@@ -53,6 +53,7 @@ export const InfiniteScroll = () => {
 
                 return uniqueData;
             });
+
             setPage(pageNum + 1);
         } catch (error) {
             console.error('Fetching error:', error);
@@ -65,7 +66,7 @@ export const InfiniteScroll = () => {
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-                if (entries[0].isIntersecting && !isLoading && hasMore) {
+                if (entries[0].isIntersecting && !isLoading) {
                     fetchData(page);
                 }
             },
@@ -84,7 +85,7 @@ export const InfiniteScroll = () => {
                 observer.unobserve(targetRef.current);
             }
         };
-    }, [isLoading, hasMore, page]);
+    }, [isLoading, page]);
 
     return (
         <div ref={containerRef} className={styles.container}>
@@ -96,9 +97,6 @@ export const InfiniteScroll = () => {
 
             {isLoading && (
                 <div className={styles.loading}>Loading more items...</div>
-            )}
-            {!hasMore && (
-                <div className={styles.endMessage}>No more items to load</div>
             )}
         </div>
     );
